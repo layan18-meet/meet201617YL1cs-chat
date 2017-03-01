@@ -62,7 +62,7 @@ class TextBox(TextInput):
         self.writer.penup()
         self.writer.goto(-130,-50)
         self.writer.clear()
-        self.writer.write(self.new_msg, font=('Arial',16,))
+        self.writer.write(self.new_msg, font=('Arial',16))
        
         
 
@@ -90,6 +90,7 @@ class SendButton(Button):
     def __init__(self,view,my_turtle=None,shape=None,pos=(0,-220)):
         super(SendButton,self).__init__()
         self.view=view
+        
     def fun(self, x=0, y=0):
         self.view.send_msg()
             
@@ -131,7 +132,7 @@ class View:
         #(i.e. self).  The name of the instance should be my_client
         ###
         my_client=Client()
-        self.my_client=Client()
+        self.my_client=my_client
         textbox=TextBox()
         self.textbox=textbox
         self.textbox.draw_box()
@@ -140,7 +141,7 @@ class View:
         
         ###
         #Set screen dimensions using turtle.setup
-        turtle.setup(width=400, height=600, startx=None, starty=None)
+        turtle.setup(width=500, height=600, startx=None, starty=None)
         #You can get help on this function, as with other turtle functions,
         #by typing
         #
@@ -171,7 +172,7 @@ class View:
         for layan in range (10):
             self.msg_queue_turtles[layan].hideturtle()
             self.msg_queue_turtles[layan].penup()
-            self.msg_queue_turtles[layan].goto(-70,layan*20)
+            self.msg_queue_turtles[layan].goto(-140,layan*20)
         ###
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
@@ -187,10 +188,10 @@ class View:
         self.setup_listeners()
 
     def send_msg(self):
-        self.my_client.send(self.text_box.new_msg)
-        self.msg_queue.insert(0,self.text_box.new_msg)
+        self.my_client.send(self.textbox.new_msg)
+        self.msg_queue.insert(0,self.textbox.new_msg)
         self.display_msg()
-        self.text_box.clear_msg()
+        self.textbox.clear_msg()
         
         '''
         You should implement this method.  It should call the
